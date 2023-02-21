@@ -12,4 +12,9 @@ public interface TestPortalService {
 	public Response randomQuestions();
 
 	public Response sendOTP(String toEmail);
+
+	public Response insertMarks(TestPortalModel model);
+
+	public Response updateMarks(int sId, String communication, String updatedBy);
+	
 }
