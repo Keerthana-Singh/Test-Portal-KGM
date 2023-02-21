@@ -35,4 +35,15 @@ public class TestPortalController {
 	public ResponseEntity<Response> getQuestions() {
 		return ResponseEntity.ok(dao.randomQuestions());
 	}
+	
+	@PostMapping("/insert/marks")
+	public ResponseEntity<Response> insertMarks(@RequestBody TestPortalModel model) {
+		return ResponseEntity.ok(dao.insertMarks(model));
+	}
+	
+	@PutMapping("/update/marks")
+	public ResponseEntity<Response> updateMarks(@RequestParam int sId, @RequestParam String communication, @RequestParam String updatedBy) {
+		return ResponseEntity.ok(dao.updateMarks(sId, communication, updatedBy));
+	}
+	
 }
