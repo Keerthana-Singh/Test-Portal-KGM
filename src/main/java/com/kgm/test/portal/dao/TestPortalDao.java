@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -126,34 +127,36 @@ public class TestPortalDao implements TestPortalService {
 					PreparedStatement ps = connection.prepareStatement(selectQuery);
 					ResultSet rs = ps.executeQuery();) {
 
+				List<JSONObject> jsonDataList = new ArrayList<>();
+				
 				while (rs.next()) {
-					JSONObject jsonObject = new JSONObject();
-//					JSONObject jsonObject1 = new JSONObject();
-
-//					boolean bool;
-
-//					jsonObject.put("questionText", rs.getString("questions"));
-//					jsonObject1.put("answerText", rs.getString("option_a"));
-//					jsonObject1.put("answerText", rs.getString("option_b"));
-//					jsonObject1.put("answerText", rs.getString("option_c"));
-//					jsonObject1.put("answerText", rs.getString("option_d"));
-//					jsonObject.put("isCorrect", rs.getString("answer"));
-//					jsonObject1.put("isCorrect", rs.getString("answer"));
-//					jsonObject1.put("isCorrect", bool = (rs.getString("option_a").equals(rs.getString("answer")))?true:false);
-//					jsonArray1.add(jsonObject1);
-//					jsonObject.put("answerOptions", jsonArray1);
-//					jsonArray.add(jsonObject);
-
-					jsonObject.put("questionText", rs.getString("questions"));
-					jsonObject.put("Option-A", rs.getString("option_a"));
-					jsonObject.put("Option-B", rs.getString("option_b"));
-					jsonObject.put("Option-C", rs.getString("option_c"));
-					jsonObject.put("Option-D", rs.getString("option_d"));
-					jsonObject.put("Answer", rs.getString("answer"));
-					jsonArray.add(jsonObject);
+					
+					JSONObject jsonObjectQuestion = new JSONObject();
+					jsonObjectQuestion.put("questionText", rs.getString("questions"));
+					JSONArray jsonObjectOptions = new JSONArray();
+					JSONObject jsonObjectAnswerOptionA = new JSONObject();
+					jsonObjectAnswerOptionA.put("answerText", rs.getString("option_a"));
+					jsonObjectAnswerOptionA.put("isCorrect", rs.getBoolean("isACorrect"));
+					JSONObject jsonObjectAnswerOptionB = new JSONObject();
+					jsonObjectAnswerOptionB.put("answerText", rs.getString("option_b"));
+					jsonObjectAnswerOptionB.put("isCorrect", rs.getBoolean("isBCorrect"));
+					JSONObject jsonObjectAnswerOptionC = new JSONObject();
+					jsonObjectAnswerOptionC.put("answerText", rs.getString("option_c"));
+					jsonObjectAnswerOptionC.put("isCorrect", rs.getBoolean("isCCorrect"));
+					JSONObject jsonObjectAnswerOptionD = new JSONObject();
+					jsonObjectAnswerOptionD.put("answerText", rs.getString("option_d"));
+					jsonObjectAnswerOptionD.put("isCorrect", rs.getBoolean("isDCorrect"));
+					jsonObjectOptions.add(jsonObjectAnswerOptionA);
+					jsonObjectOptions.add(jsonObjectAnswerOptionB);
+					jsonObjectOptions.add(jsonObjectAnswerOptionC);
+					jsonObjectOptions.add(jsonObjectAnswerOptionD);
+					jsonObjectQuestion.put("answerOptions", jsonObjectOptions);
+					jsonDataList.add(jsonObjectQuestion);
 				}
 
-				response.setjData(jsonArray);
+				System.out.println("Output " + jsonDataList.toString());
+				
+				response.setjData(jsonDataList);
 				response.setResponseCode(200);
 				response.setResponseMsg("success");
 			} catch (Exception e) {
