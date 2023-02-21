@@ -120,6 +120,7 @@ public class TestPortalDao implements TestPortalService {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			JSONArray jsonArray = new JSONArray();
+//			JSONArray jsonArray1 = new JSONArray();
 
 			try (Connection connection = DriverManager.getConnection(url, username, password);
 					PreparedStatement ps = connection.prepareStatement(selectQuery);
@@ -127,7 +128,23 @@ public class TestPortalDao implements TestPortalService {
 
 				while (rs.next()) {
 					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("Question", rs.getString("questions"));
+//					JSONObject jsonObject1 = new JSONObject();
+
+//					boolean bool;
+
+//					jsonObject.put("questionText", rs.getString("questions"));
+//					jsonObject1.put("answerText", rs.getString("option_a"));
+//					jsonObject1.put("answerText", rs.getString("option_b"));
+//					jsonObject1.put("answerText", rs.getString("option_c"));
+//					jsonObject1.put("answerText", rs.getString("option_d"));
+//					jsonObject.put("isCorrect", rs.getString("answer"));
+//					jsonObject1.put("isCorrect", rs.getString("answer"));
+//					jsonObject1.put("isCorrect", bool = (rs.getString("option_a").equals(rs.getString("answer")))?true:false);
+//					jsonArray1.add(jsonObject1);
+//					jsonObject.put("answerOptions", jsonArray1);
+//					jsonArray.add(jsonObject);
+
+					jsonObject.put("questionText", rs.getString("questions"));
 					jsonObject.put("Option-A", rs.getString("option_a"));
 					jsonObject.put("Option-B", rs.getString("option_b"));
 					jsonObject.put("Option-C", rs.getString("option_c"));
@@ -147,6 +164,63 @@ public class TestPortalDao implements TestPortalService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+
+		return response;
+	}
+
+	@Override
+	public Response insertMarks(TestPortalModel model) {
+
+		Response response = new Response();
+
+		try (Connection connection = DriverManager.getConnection(url, username, password);
+				Statement statement = connection.createStatement();) {
+
+			String insertMarksQuery = "INSERT INTO students_progress_details (students_progress_details_id, numeric_basic, numeric_intermediate, numeric_advanced, verbal_basic, verbal_intermediate, verbal_advanced, communication, updated_by, updated_date) "
+					+ "VALUES (" + model.getStudentsProgressDetailsId() + ", ' " + model.getNumericBasic() + " ', ' "
+					+ model.getNumericIntermediate() + " ', ' " + model.getNumericAdvanced() + " ', ' "
+					+ model.getVerbalBasic() + " ', ' " + model.getVerbalIntermediate() + " ', ' "
+					+ model.getVerbalAdvanced() + " ', ' " + model.getCommunication() + " ', ' " + model.getUpdatedBy()
+					+ " ', ' " + model.getUpdatedDate() + " ');";
+
+			System.out.println("Insert Marks Query " + insertMarksQuery);
+			statement.executeUpdate(insertMarksQuery);
+
+			response.setResponseCode(200);
+			response.setResponseMsg("success");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setResponseCode(500);
+			response.setResponseMsg("failure");
+		}
+
+		return response;
+	}
+
+	@Override
+	public Response updateMarks(int sId, String communication, String updatedBy) {
+
+		Response response = new Response();
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		
+
+		try (Connection connection = DriverManager.getConnection(url, username, password);
+				Statement statement = connection.createStatement();) {
+
+			String updateQuery = "UPDATE students_progress_details SET communication = ' " + communication + " ', updated_by = ' " + updatedBy + " ', updated_date = ' " + date + " ' WHERE students_progress_details_id = " + sId + ";";
+			
+			System.out.println("Update Mark Query " + updateQuery);			
+			statement.executeUpdate(updateQuery);
+			
+			response.setResponseCode(200);
+			response.setResponseMsg("success");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setResponseCode(500);
+			response.setResponseMsg("failure");
 		}
 
 		return response;
