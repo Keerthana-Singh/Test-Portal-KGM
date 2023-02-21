@@ -16,6 +16,17 @@ public class TestPortalModel {
 	private String degree;
 	private String employeeStatus;
 	private Date updatedDate;
+	
+	
+	private int studentsProgressDetailsId;
+	private int numericBasic;
+	private int numericIntermediate;
+	private int numericAdvanced;
+	private int verbalBasic;
+	private int verbalIntermediate;
+	private int verbalAdvanced;
+	private int communication;
+	private int updatedBy;
 
 	public int getUserDetailsId() {
 		return userDetailsId;
@@ -111,6 +122,78 @@ public class TestPortalModel {
 
 	public void setUpdatedDate(Date date) {
 		this.updatedDate = date;
+	}
+
+		public int getStudentsProgressDetailsId() {
+		return studentsProgressDetailsId;
+	}
+
+	public void setStudentsProgressDetailsId(int studentsProgressDetailsId) {
+		this.studentsProgressDetailsId = studentsProgressDetailsId;
+	}
+
+	public int getNumericBasic() {
+		return numericBasic;
+	}
+
+	public void setNumericBasic(int numericBasic) {
+		this.numericBasic = numericBasic;
+	}
+
+	public int getNumericIntermediate() {
+		return numericIntermediate;
+	}
+
+	public void setNumericIntermediate(int numericIntermediate) {
+		this.numericIntermediate = numericIntermediate;
+	}
+
+	public int getNumericAdvanced() {
+		return numericAdvanced;
+	}
+
+	public void setNumericAdvanced(int numericAdvanced) {
+		this.numericAdvanced = numericAdvanced;
+	}
+
+	public int getVerbalBasic() {
+		return verbalBasic;
+	}
+
+	public void setVerbalBasic(int verbalBasic) {
+		this.verbalBasic = verbalBasic;
+	}
+
+	public int getVerbalIntermediate() {
+		return verbalIntermediate;
+	}
+
+	public void setVerbalIntermediate(int verbalIntermediate) {
+		this.verbalIntermediate = verbalIntermediate;
+	}
+
+	public int getVerbalAdvanced() {
+		return verbalAdvanced;
+	}
+
+	public void setVerbalAdvanced(int verbalAdvanced) {
+		this.verbalAdvanced = verbalAdvanced;
+	}
+
+	public int getCommunication() {
+		return communication;
+	}
+
+	public void setCommunication(int communication) {
+		this.communication = communication;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 
 }
